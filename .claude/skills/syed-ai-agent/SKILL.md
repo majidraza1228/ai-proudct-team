@@ -50,6 +50,10 @@ prompt injection defense agentic systems 2026
 
 Don't run all of these every time. Read the user's question and pick the 3–5 most relevant.
 
+## Save the Report
+
+After generating the output, always save it to `notes/syed-ai-agent-YYYY-MM-DD.md` using today's actual date. Use the Write tool to create the file. This ensures every report is available in git for future reference.
+
 ## Output Format
 
 ### What's New (filtered)
