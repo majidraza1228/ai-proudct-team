@@ -21,34 +21,46 @@ Everything you surface must pass the filter: **does this help the user get this 
 
 Run web searches across these areas, focused on the last 30–60 days:
 
-### AI Platforms
-- **Anthropic**: Claude API updates, new models, MCP announcements, tool use changes, SDK releases
-- **OpenAI**: API changes, new models (GPT-4o, o-series), Agents SDK updates, Codex CLI releases
-- **Microsoft/GitHub**: GitHub Copilot updates, Copilot coding agent, Azure OpenAI changes, AKS AI features
+### AI Platforms (Microsoft, Claude, OpenAI only)
+- **Anthropic/Claude**: Claude API updates, new models, MCP announcements, tool use changes, SDK releases, prompt caching improvements
+- **OpenAI**: API changes, new models, Agents SDK updates, Codex CLI, Structured Outputs, Batch API
+- **Microsoft/GitHub**: GitHub Copilot updates, Azure OpenAI changes, AKS AI features, Prompt Shields, managed identity patterns
+
+### Token Optimization + Engineering Best Practices
+- Prompt caching techniques across Claude and OpenAI
+- Context window management patterns for long-running agents
+- Model tiering strategies (small model routing + large model execution)
+- Batch API usage for cost reduction
+- Structured outputs vs free-text parsing
+- Tool call efficiency patterns
 
 ### Infrastructure (always relevant to the job)
-- **Kubernetes for AI**: Long-running job patterns, GPU scheduling, KEDA for agent autoscaling, KubeAI
-- **AWS for agents**: Bedrock updates, EKS AI features, Step Functions for agentic workflows
-- **Observability**: OpenTelemetry for LLM apps, new tracing tools for agents (Langfuse, Arize, etc.)
-- **Temporal**: New releases, patterns for durable agent execution
-- **Security**: Prompt injection CVEs or research, agent sandboxing tools, supply chain issues
+- **Kubernetes for AI**: Long-running job patterns, KEDA for agent autoscaling
+- **AWS for agents**: EKS AI features, Step Functions for agentic workflows
+- **Observability**: OpenTelemetry for LLM apps, tracing tools for agents
+- **Security**: Prompt injection CVEs, agent sandboxing, audit trails
+
+### Job Market (AI Engineer, FDE, AI Infra roles)
+- New job postings for: AI Engineer, Forward Deployed Engineer, AI Infrastructure Engineer, Applied AI Engineer, LLM Engineer
+- What skills companies are requiring in H2 2026
+- Salary ranges and company trends
 
 ## Search Queries to Run
 
-Use WebSearch for each of these, picking the most relevant given the user's current month:
+Use WebSearch picking the most relevant for the current month. Run 4–5 max:
 
 ```
-Anthropic Claude API updates [current month year]
-OpenAI Agents SDK release notes [current month year]
+Anthropic Claude API token optimization best practices [current month year]
+OpenAI engineering best practices agents production [current month year]
+Microsoft Azure OpenAI prompt engineering cost reduction 2026
 GitHub Copilot new features [current month year]
-Kubernetes LLM agent workloads 2026
-AWS Bedrock agentic updates [current month year]
-OpenTelemetry LLM observability 2026
-Temporal workflow AI agents 2026
-prompt injection defense agentic systems 2026
+Kubernetes agent workloads KEDA [current month year]
+AWS EKS agentic workloads [current month year]
+OpenTelemetry LLM observability [current month year]
+prompt injection defense production agents 2026
+"AI Engineer" OR "Forward Deployed Engineer" OR "AI Infrastructure Engineer" jobs 2026
+token cost reduction LLM production engineering 2026
 ```
-
-Don't run all of these every time. Read the user's question and pick the 3–5 most relevant.
 
 ## Save the Report
 
