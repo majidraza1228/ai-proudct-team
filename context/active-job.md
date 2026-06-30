@@ -15,8 +15,8 @@
 
 ## Role 1: AI Infrastructure Engineer
 
-**Status:** Pursuing — 3-month prep window (July–September 2026)
-**Apply by:** End of September 2026
+**Status:** Pursuing — 4-month prep window (July–October 2026)
+**Apply by:** October 2026
 **Companies:** AI-native companies, infrastructure-first startups
 
 **Must-have for the role:**
@@ -27,17 +27,18 @@
 - AWS + infrastructure-as-code
 - Incident response and on-call for AI workloads
 
-**3-month plan:**
+**4-month plan:**
 - Month 1 (July): Claude SDK agent → AWS IaC → deployment pipelines → Kubernetes
 - Month 2 (August): Observability → security → Temporal → runbook
-- Month 3 (September): Shared primitive → eval harness → documentation → interview prep
+- Month 3 (September): Shared primitive → eval harness → documentation
+- Month 4 (October): Interview prep → mock interviews → apply → close
 
 ---
 
 ## Role 2: Forward Deployed Engineer (FDE)
 
-**Status:** Pursuing — same 3-month window (July–September 2026)
-**Apply by:** End of September 2026
+**Status:** Pursuing — same 4-month window (July–October 2026)
+**Apply by:** October 2026
 **Companies:** Palantir, Scale AI, OpenAI, Anthropic, Sierra, Harvey, Glean, enterprise AI companies
 
 **What FDE companies want:**
@@ -66,6 +67,15 @@
 
 ---
 
+## 4-Month Prep Plan
+
+| Month | Focus | Goal |
+|-------|-------|------|
+| Month 1 (July) | Foundation | Claude SDK agent + AWS IaC + deployment pipelines + Kubernetes |
+| Month 2 (August) | Production depth | Observability + security + Temporal + incident runbook |
+| Month 3 (September) | Differentiation | Shared primitive + eval harness + documentation |
+| Month 4 (October) | Close | Mock interviews + apply + negotiate |
+
 ## Current month: Month 1 (July)
 
 Focus: Build the foundation artifact — a Claude SDK agent with tool use, deployed to AWS, observable from day one.
@@ -73,3 +83,7 @@ Focus: Build the foundation artifact — a Claude SDK agent with tool use, deplo
 This artifact serves BOTH targets:
 - **AI Infra** — shows you can build and deploy agents on real infrastructure
 - **FDE** — shows you can build a working agent quickly and understand how it behaves in production
+
+## How to stay prepared
+
+The daily `/syed-ai-agent` routine (7pm EST) surfaces what's new across Claude, OpenAI, Microsoft, Kubernetes, and AWS every day — filtered to what matters for these two roles. The weekly job finder (Mondays 9am EST) tracks live openings. Use `/mock-interview` to practice as you build skills each month.
