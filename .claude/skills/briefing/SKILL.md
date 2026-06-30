@@ -17,24 +17,30 @@ Read `context/active-job.md` to know:
 
 ## Step 2: Check Gmail
 
-Search Gmail for relevant unread emails from the last 7 days. Run these two searches:
+Search Gmail for relevant unread emails from the last 7 days. Run these three searches:
 
-**Job and career emails:**
+**Job and recruiter emails:**
 ```
-is:unread newer_than:7d (subject:(recruiter OR interview OR hiring OR opportunity OR application OR engineer OR job offer) OR from:(lever.co OR greenhouse.io OR workday.com OR linkedin.com OR indeed.com))
-```
-
-**Learning and AI content worth reading:**
-```
-is:unread newer_than:7d (subject:(AI OR agent OR kubernetes OR AWS OR infrastructure OR LLM OR Claude OR OpenAI) OR from:(substack.com OR courses.maven.com OR newsletter))
+is:unread newer_than:7d (subject:(recruiter OR interview OR hiring OR opportunity OR application OR job offer) OR from:(lever.co OR greenhouse.io OR workday.com OR linkedin.com OR indeed.com))
 ```
 
-Filter ruthlessly. Only surface:
+**Substack newsletters (read and filter):**
+```
+is:unread newer_than:7d from:substack.com
+```
+For each Substack email: read the subject and snippet. Only surface it if it covers one of these topics: AI agents, Kubernetes, AWS, infrastructure, LLM production, observability, security, job market for AI/infra engineers. Skip all others.
+
+**Maven and learning courses:**
+```
+is:unread newer_than:7d (from:(courses.maven.com OR maven.com) OR subject:(AI OR agent OR kubernetes OR infrastructure OR LLM OR Claude OR OpenAI))
+```
+
+Filter ruthlessly across all three. Only surface:
 - Direct recruiter outreach or application status updates
-- Learning content directly relevant to the active job requirements
-- Course or event reminders for this week
+- Substack posts specifically about AI infra, agents in production, or the job market
+- Course/event reminders for this week that are directly relevant
 
-Skip: promotional emails, generic newsletters with no specific relevance, anything that doesn't pass the "does this help me get the job" test.
+Skip: generic career advice, unrelated tech content, promotional emails, anything that doesn't connect to the active job requirements.
 
 ## Step 3: Check Google Calendar
 
