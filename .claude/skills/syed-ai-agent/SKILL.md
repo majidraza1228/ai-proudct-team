@@ -54,6 +54,26 @@ Don't run all of these every time. Read the user's question and pick the 3–5 m
 
 After generating the output, always save it to `notes/syed-ai-agent-YYYY-MM-DD.md` using today's actual date. Use the Write tool to create the file. This ensures every report is available in git for future reference.
 
+## Post to Slack
+
+After saving the file, post a summary to the `#ai-updates` Slack channel using the Slack MCP tool. Keep the Slack message short — it's a heads-up, not the full report.
+
+Format:
+```
+*Syed AI Agent — [DATE]*
+
+*Today's focus:* [one sentence]
+
+*Top findings:*
+• [Item 1 — one line]
+• [Item 2 — one line]
+• [Item 3 — one line]
+
+*Flag:* [One thing that changes the plan, or "nothing new this week"]
+
+Full report saved to `notes/syed-ai-agent-[DATE].md`
+```
+
 ## Output Format
 
 ### What's New (filtered)
