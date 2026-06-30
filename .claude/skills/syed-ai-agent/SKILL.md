@@ -56,7 +56,7 @@ After generating the output, always save it to `notes/syed-ai-agent-YYYY-MM-DD.m
 
 ## Post to Slack
 
-After saving the file, post a summary to the `#ai-updates` Slack channel using the Slack MCP tool. Keep the Slack message short — it's a heads-up, not the full report.
+After saving the file, post a summary to the `#syed-ai-update` Slack channel using the Slack MCP tool. Keep the Slack message short — it's a heads-up, not the full report.
 
 Format:
 ```
