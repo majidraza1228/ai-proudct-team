@@ -14,7 +14,7 @@ Each skill represents a specialist on the team — one per major AI platform, pl
 | `/claude-expert` | Anthropic | Claude API, tool use, MCP, agent orchestration, production deployment of Claude agents |
 | `/openai-expert` | OpenAI | GPT-4o, Assistants API, Codex, Agents SDK, function calling, production patterns |
 | `/copilot-expert` | Microsoft / GitHub | GitHub Copilot, GitHub Actions, Azure, AKS, Microsoft identity (OIDC, Entra) |
-| `/scout` | Research | Live web search across all platforms + Kubernetes/AWS, filtered to the job goal |
+| `/syed-ai-agent` | Research | Live web search across all platforms + Kubernetes/AWS, filtered to the job goal |
 
 ---
 
@@ -35,7 +35,7 @@ AI-Product-Team/
         ├── claude-expert/SKILL.md
         ├── openai-expert/SKILL.md
         ├── copilot-expert/SKILL.md
-        └── scout/SKILL.md
+        └── syed-ai-agent/SKILL.md
 ```
 
 ---
@@ -60,13 +60,13 @@ AI-Product-Team/
    claude
    ```
 
-4. Skills are now available as `/coordinator`, `/claude-expert`, `/openai-expert`, `/copilot-expert`, `/scout`
+4. Skills are now available as `/coordinator`, `/claude-expert`, `/openai-expert`, `/copilot-expert`, `/syed-ai-agent`
 
 ### Daily workflow
 
 | What you want | Command |
 |--------------|---------|
-| Direction for the week | `/scout` |
+| Direction for the week | `/syed-ai-agent` |
 | Cross-platform question | `/coordinator` |
 | Deep dive on Claude/Anthropic | `/claude-expert` |
 | Deep dive on OpenAI | `/openai-expert` |
@@ -116,4 +116,4 @@ See `context/job.md` for the full job description and gap analysis.
 
 ## Notes
 
-Scout reports are saved to `notes/` after each `/scout` run. Week-by-week instructions are in `notes/month-1-roadmap.md`. These persist across Claude sessions — nothing is lost when you close the chat.
+Scout reports are saved to `notes/` after each `/syed-ai-agent` run. Week-by-week instructions are in `notes/month-1-roadmap.md`. These persist across Claude sessions — nothing is lost when you close the chat.

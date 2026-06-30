@@ -13,7 +13,7 @@ Read `context/job.md` first in every session. It contains the job description, 3
 | `/claude-expert` | Claude API, tool use, MCP, Anthropic agent patterns |
 | `/openai-expert` | OpenAI platform, Assistants API, Codex, function calling |
 | `/copilot-expert` | GitHub Copilot, GitHub Actions, Azure, AKS |
-| `/scout` | Latest updates across all platforms + Kubernetes/AWS; directional advice |
+| `/syed-ai-agent` | Latest updates across all platforms + Kubernetes/AWS; directional advice |
 
 ## 3-Month Plan (July–September 2026)
 - **Month 1 (July)**: Kubernetes for AI, AWS IaC, agent deployment pipelines
