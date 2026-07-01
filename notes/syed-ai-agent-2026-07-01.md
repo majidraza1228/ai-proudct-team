@@ -208,18 +208,114 @@ client.beta.agents.update(agent.id, mcp_servers=[
 
 ---
 
-### MCP spec is going stateless on July 28 — build for it now
+### MCP spec is going stateless on July 28 — full explanation
 
-The 2026-07-28 MCP release candidate ships in 27 days and makes a breaking change: sessions are removed. The `Mcp-Session-Id` header is gone, the `initialize` handshake is gone, and every request is self-contained. MCP servers become stateless services you can scale horizontally behind a load balancer.
+#### The simple analogy
 
-**Authorization:** MCP servers are now formally OAuth 2.1 resource servers. Enterprise SSO covers all your MCP servers through a single OAuth flow.
+The **old MCP** is like a **phone call**: you dial in (initialize handshake), the server picks up and remembers who you are for the whole call, everything ties to that session, and if the call drops you start over.
 
-**Build stateless from the start in Month 1:**
-- Don't store per-session state in the MCP server process
-- Keep all context in the agent (the caller), not in the server
-- Wire OAuth 2.1 from day one — don't bolt it on later
+The **new MCP (July 28)** is like **text messages**: every message is self-contained, the server doesn't need to remember who you are, and you can swap the server out mid-conversation without anyone noticing.
 
-If you build session-based MCP servers now, you'll rewrite them in Month 2 when SDK support for the new spec ships.
+#### What the old spec required
+
+Every MCP interaction started with a two-step handshake before any real work happened:
+
+```
+Client → Server:  "initialize"  (here's who I am, my capabilities, protocol version)
+Server → Client:  "initialized" (here's who I am back)
+         ↓
+     Session established. Server stores session in memory.
+         ↓
+Client → Server:  tools/call + Mcp-Session-Id: abc123
+Server → Client:  result  (looked up "abc123" to find your context)
+```
+
+The `Mcp-Session-Id` header was the glue. The server kept a lookup table of active sessions in memory. **The production problem:** you couldn't run two MCP server instances behind a load balancer without sticky sessions or a shared session store. Every request had to go back to the same server that held your session. Fragile, hard to scale, breaks on pod restart.
+
+#### What changes on July 28
+
+**Removed entirely:**
+- `initialize` / `initialized` handshake
+- `Mcp-Session-Id` header
+- `tasks/list` endpoint (can't be scoped safely without sessions)
+
+**What replaces them:**
+- Protocol version + capabilities now travel in `_meta` on **every request** — no handshake needed
+- New `server/discover` method: client calls it on demand to ask "what can you do?"
+- New `Mcp-Method` and `Mcp-Name` HTTP headers so load balancers can route by operation without session tracking
+- Tasks use explicit handles: `tasks/get`, `tasks/update`, `tasks/cancel` — no list
+
+Every request is now self-contained. Any server instance can answer any request.
+
+#### What breaks in code built today
+
+| What you built | Why it breaks |
+|---|---|
+| `initialize` handler | Clients won't send it anymore |
+| Reading `Mcp-Session-Id` header | Header no longer exists |
+| In-memory session dict `sessions[id] = {...}` | No session ID to key on |
+| `tasks/list` endpoint | Removed from the spec |
+
+#### What "stateless" does NOT mean
+
+Stateless at the **protocol layer** doesn't mean your server can't hold state. It means the **protocol no longer manages state for you**. If a tool genuinely needs to track state across calls, you mint your own handle and have the model pass it back:
+
+```python
+# Tool 1: start a job, return a handle the model will pass back
+@mcp_server.tool()
+def start_analysis(data: str) -> dict:
+    job_id = str(uuid.uuid4())
+    db.set(job_id, {"status": "running", "data": data})  # external store, not memory
+    return {"job_id": job_id}
+
+# Tool 2: model passes job_id back as a regular argument
+@mcp_server.tool()
+def check_analysis(job_id: str) -> dict:
+    return db.get(job_id) or {"error": "not found"}
+```
+
+The model receives `job_id` from Tool 1 and includes it in the next call. The server never needed a session ID — state lives in the tool response and travels back through the model.
+
+#### Three rules for Month 1 — avoid a rewrite
+
+**Rule 1: Never write an `initialize` handler.** Skip it entirely. If you're using the official MCP Python SDK, new Tier 1 SDK support for the stateless spec is expected by early August. Pin to that version when it drops.
+
+**Rule 2: Never key state on session ID.**
+```python
+# Don't build this pattern
+sessions = {}
+def handle(session_id, data):
+    sessions[session_id] = data  # breaks July 28
+
+# Build this instead — state travels through the tool response
+def start_workflow(input: str) -> dict:
+    handle = store_externally(input)  # Redis, DB, S3
+    return {"handle": handle}
+```
+
+**Rule 3: Store state externally, not in process memory.** If your MCP server pod restarts (Kubernetes eviction, scale-in), in-memory state is gone. Use Redis or a database for anything that needs to outlive a single request. This is also the right pattern for Month 2 Kubernetes work — stateless pods + external state store is the production architecture.
+
+#### Authorization: OAuth 2.1 is now formal
+
+MCP servers are formally positioned as **OAuth 2.1 resource servers** in the new spec. Enterprise SSO can cover all your MCP servers through a single OAuth flow. Wire this from the start — it's what FDE customers on Azure AD or Okta will expect, and it satisfies the least-privilege + audit trail requirements on the job description.
+
+#### Migration checklist (for when the spec ships July 28)
+
+- [ ] Upgrade MCP SDK to the version supporting the new spec (early August ETA)
+- [ ] Remove `initialize` / `initialized` handlers
+- [ ] Remove all reads of `Mcp-Session-Id` header
+- [ ] Replace in-memory session dicts with explicit handles returned from tools
+- [ ] Move any persistent state to external store (Redis, DB, S3)
+- [ ] Replace `tasks/list` usage with handle-based `tasks/get`
+- [ ] Add `ttlMs` to list responses (new requirement)
+- [ ] Wire OAuth 2.1 for server auth
+
+Sources:
+- [MCP 2026-07-28 RC — official blog](https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/)
+- [MCP Goes Stateless — DEV Community](https://dev.to/rabinarayanpatra/why-mcp-2026-07-28-spec-drops-sessions-and-goes-stateless-1gd)
+- [Every Breaking Change and How to Migrate — DEV Community](https://dev.to/akaranjkar08/mcp-spec-ships-july-28-every-breaking-change-and-how-to-migrate-4co8)
+- [MCP Stateless RC Explained — MCP.Directory](https://mcp.directory/blog/mcp-2026-07-28-release-candidate)
+- [WorkOS — MCP Agent Auth Changes](https://workos.com/blog/mcp-2026-spec-agent-authentication)
 
 ---
 
